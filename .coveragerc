@@ -1,0 +1,7 @@
+[run]
+source = zxwhale
+omit = */__init__.py
+
+[report]
+show_missing = true
+fail_under = 80
