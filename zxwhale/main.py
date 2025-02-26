@@ -11,10 +11,11 @@ from .ui.main_window import MainWindow
 def bootstrap():
     # 初始化配置
     cm = ConfigManager()
-    cm.load_from_file("./config/to_feishu.json")  # 可选加载外部配置
+    cm.load_from_file("to_feishu.json")  # 可选加载外部配置
     
     # 构建核心服务
     clip_monitor = ClipboardMonitor(cm.get('check_interval', 1.0))
+    print(cm.config)
     text_processor = TextProcessor(cm.config)
     
     # 启动界面

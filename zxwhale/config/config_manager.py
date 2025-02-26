@@ -6,7 +6,6 @@
 import json
 from pathlib import Path
 import logging
-from . import log_config  # 新增导入
 
 class ConfigManager:
     def __init__(self):
@@ -19,7 +18,7 @@ class ConfigManager:
         """集成统一日志的加载方法"""
         self.logger.info(f"启动配置文件加载流程：{config_path}")
         try:
-            config_file = Path(config_path)
+            config_file = Path.cwd() / config_p
             if not config_file.exists():
                 self.logger.error(f"配置文件路径不可达：{config_path}")
                 return False
@@ -47,10 +46,29 @@ class ConfigManager:
         self.logger.debug(f"访问配置项 {key} => {str(value)[:50]}")  # 防止敏感信息泄露[5](@ref)
         return value
 
+    def safe_get(self, key: str, default=None, mask=False):
+        """安全获取配置项（防敏感信息泄露）"""
+        value = self.config.get(key, default)
+
+        if mask and value is not None:
+            masked = str(value)[:1] + "*****" + str(value)[-1:]
+            self.logger.debug(f"安全访问配置项 {key} => {masked}")
+        else:
+            self.logger.debug(f"访问配置项 {key} => {str(value)[:50]}")
+
+        return value
+
 # config_manager.py (续)
 if __name__ == "__main__":
+    import os
+    import sys
+    # add current directory to Python Path 
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    sys.path.insert(0, current_dir)
+
+    from log_config import setup_logging 
     # 初始化日志系统
-    log_config.setup_logging()  # 关键变更[5](@ref)
+    setup_logging()  # 关键变更[5](@ref)
     
     # 演示用例
     cm = ConfigManager()
