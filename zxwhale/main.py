@@ -2,7 +2,8 @@
 程序入口文件
 实现依赖注入和模块组装
 """
-from .config.settings import ConfigManager
+
+from .config import setup_logging, ConfigManager
 from .core.clipboard import ClipboardMonitor
 from .core.processor import TextProcessor
 from .ui.main_window import MainWindow
@@ -23,5 +24,6 @@ def bootstrap():
     return window
 
 if __name__ == "__main__":
+    setup_logging()
     app = bootstrap()
     app.mainloop()
