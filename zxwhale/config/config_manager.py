@@ -7,16 +7,7 @@ from pathlib import Path
 
 class ConfigManager:
     def __init__(self):
-        self.default_config = {
-            'auto_convert': True,
-            'replace_rules': {
-                'commands': {'\\mathbf': '\\bm'},
-                'inline': ('\\(', '\\)', '$$', '$$'),
-                'display': ('\\[', '\\]', '$$', '$$')
-            },
-            'check_interval': 1
-        }
-        self.config = self.default_config.copy()
+        self.config = {} 
     
     def load_from_file(self, config_path: str):
         """从文件加载配置"""

@@ -1,0 +1,9 @@
+{
+    "auto_convert": true,
+    "replace_rules": {
+        "commands": {"\\mathbf": "\\bm"},
+        "inline": ("\\(", "\\)", "$$", "$$"),
+        "display": ("\\[", "\\]", "$$", "$$")
+    },
+    "check_interval": 1
+}
